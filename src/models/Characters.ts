@@ -14,7 +14,6 @@ export class Character {
         this.inventory = inventory;
     }
 
-// Métodos getter
     getName(): string {
         return this.name;
     }
@@ -35,7 +34,6 @@ export class Character {
         return this.inventory;
     }
 
-// Métodos setter
     setName(name: string): void {
         this.name = name;
     }
