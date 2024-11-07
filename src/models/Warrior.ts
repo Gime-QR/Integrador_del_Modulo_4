@@ -11,7 +11,6 @@ export class Warrior extends Character {
         this.defense = defense;
     }
 
-// Métodos getter
     getAttack(): number {
         return this.attack;
     }
@@ -20,7 +19,6 @@ export class Warrior extends Character {
         return this.defense;
     }
 
-// Métodos setter
     setAttack(attack: number): void {
         this.attack = attack;
     }
