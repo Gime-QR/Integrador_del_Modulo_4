@@ -11,7 +11,6 @@ export class Mage extends Character {
         this.mana = mana;
     }
 
-// Métodos getter
     getMagicPower(): number {
         return this.magicPower;
     }
@@ -20,7 +19,6 @@ export class Mage extends Character {
         return this.mana;
     }
 
-// Métodos setter
     setMagicPower(magicPower: number): void {
         this.magicPower = magicPower;
     }
