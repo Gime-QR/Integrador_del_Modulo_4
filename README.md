@@ -1,0 +1,3 @@
+PAQUETES INSTALADOS:
+PackageJson
+
