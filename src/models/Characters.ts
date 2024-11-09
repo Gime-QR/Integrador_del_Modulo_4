@@ -13,6 +13,20 @@ export class Character {
         this.experience = experience;
         this.inventory = inventory;
     }
+    
+//Polimorfismo para ejecutar estas acciones de forma diferente según el tipo de personaje 
+    attack(): void {
+        console.log(`${this.name} realiza un ataque básico.`);
+    }
+    
+    move(): void {
+        console.log(`${this.name} se mueve.`);
+    }
+
+
+    getStatus(): string {
+        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: [${this.inventory.join(", ")}]`;
+    }
 
     getName(): string {
         return this.name;

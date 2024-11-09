@@ -4,12 +4,12 @@
   },
   "name": "integradormodulo4",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "ts-node src/index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pacheco Evelia, Querejeta Rial Gimena, V. Camila",
   "license": "ISC",
   "description": ""
 }

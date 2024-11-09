@@ -2,31 +2,23 @@
 import { Character } from './Characters';
 
 export class Warrior extends Character {
-    private attack: number;
+    private attackPower: number;
     private defense: number;
 
-    constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = [], attack: number = 10, defense: number = 5) {
+    constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = [], attackPower: number = 15, defense: number = 5) {
         super(name, level, health, experience, inventory);
-        this.attack = attack;
+        this.attackPower = attackPower;
         this.defense = defense;
     }
 
-    getAttack(): number {
-        return this.attack;
+    attack(): void {
+        console.log(`${this.name} ataca con fuerza de ${this.attackPower}.`);
     }
-
-    getDefense(): number {
-        return this.defense;
+    
+    move(): void {
+        console.log(`${this.name} avanza con su armadura pesada.`);
     }
-
-    setAttack(attack: number): void {
-        this.attack = attack;
-    }
-
-    setDefense(defense: number): void {
-        this.defense = defense;
-    }
-
+    
 // Método específico para Warrior
     increaseDefense(amount: number): void {
         this.defense += amount;
@@ -35,10 +27,14 @@ export class Warrior extends Character {
 
 // Método de combate específico para el Warrior
     engageInCombat(enemy: Character): string {
-        if (this.attack > enemy.getHealth()) {
+        const damage = this.attackPower;
+        const newHealth = enemy.getHealth() - damage;
+        if (enemy.getHealth() <= 0) {
             return `${this.name} ha derrotado a ${enemy.getName()} en combate.`;
         } else {
-            return `${this.name} ha atacado a ${enemy.getName()} pero no logró derrotarlo.`;
+            return `${this.name} ha atacado a ${enemy.getName()} y le ha reducido la salud a ${enemy.getHealth()}.`;
         }
     }
 }
+
+
