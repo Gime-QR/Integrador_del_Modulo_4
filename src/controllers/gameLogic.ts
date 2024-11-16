@@ -1,6 +1,8 @@
 import { Character } from '../models/Characters';
 import { Warrior } from '../models/Warrior';
 import { Mage } from '../models/Mage';
+import { Mission } from '../models/Mission';
+import { eventNames } from 'process';
 
 const characters: Character[] = [];
 
@@ -40,4 +42,36 @@ if (character) {
 } else {
     console.log(`Personaje no encontrado`);
 }
+}
+
+
+ class Event{
+    manejarEvento(): void {
+        console.log("Manejando evento del juego");
+        
+    }
+}
+
+class EventSorpresa extends Event{
+    manejarEvento(): void{
+        console.log("Evento Sorpresa");
+        
+    }
+}
+class EventRecompensa extends Event{
+    manejarEvento(): void {
+        console.log("Obtención de recompensa");
+        
+    }
+}
+
+function triggerEvent(evento:Event):void {
+    if (EventSorpresa) {
+        return evento.manejarEvento()
+   }else if (EventSorpresa){
+    return evento.manejarEvento()
+   }else{
+    throw new Error("no encontrado")
+   }
+    
 }
