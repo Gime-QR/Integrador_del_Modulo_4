@@ -11,6 +11,7 @@ export class Mage extends Character {
         this.mana = mana;
     }
 
+/*
     getMagicPower(): number {
         return this.magicPower;
     }
@@ -26,21 +27,36 @@ export class Mage extends Character {
     setMana(mana: number): void {
         this.mana = mana;
     }
+*/
 
+
+attack(): void {
+    if (this.mana >= 10) {
+this.mana -= 10;
+console.log(`${this.name} lanza un hechizo con poder mágico de ${this.magicPower}.`);
+    } else {
+console.log(`${this.name} no tiene suficiente mana para lanzar un hechizo.`);
+    }
+}
+
+move(): void {
+    console.log(`${this.name} se teletransporta.`);
+}
+// Método de recuperación de maná
+recoverMana(amount: number): void {
+    this.mana += amount;
+    console.log(`${this.name} ha recuperado ${amount} de mana. Mana actual: ${this.mana}.`);
+}
 // Método específico para Mage
-    castSpell(): string {
+    castSpell(): number | string {
         if (this.mana >= 10) {
             this.mana -= 10;
             console.log(`${this.name} ha lanzado un hechizo con poder mágico de ${this.magicPower}`);
-            return `Hechizo lanzado con poder mágico de ${this.magicPower}. Mana restante: ${this.mana}`;
+            return this.magicPower; // Retornamos el daño causado
         } else {
+            console.log(`${this.name} no tiene suficiente mana para lanzar un hechizo.`);
             return `${this.name} no tiene suficiente mana para lanzar un hechizo.`;
         }
     }
 
-// Método de recuperación de maná
-    recoverMana(amount: number): void {
-        this.mana += amount;
-        console.log(`${this.name} ha recuperado ${amount} de mana. Mana actual: ${this.mana}`);
-    }
 }

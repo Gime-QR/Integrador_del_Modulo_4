@@ -1,55 +1,45 @@
-/*
-2. Misiones:
-o Define una función assignMission que permita asignar una misión a un personaje. La 
-misión tendrá description, difficulty, y reward
-o Crea una función completeMission que determine si el personaje tiene éxito en la misión, 
-basándose en su nivel y la dificultad.
-o Añade una función listMissions para ver todas las misiones asignadas a un personaje.
-3. Simulación de Juego: En el archivo principal (index.ts), usa estas funciones para crear personajes 
-y asignar misiones, probando el flujo de creación, actualización y eliminación.*/
 
- import { Character } from '../models/Characters';
+import { Character } from '../models/Characters';
+import { Warrior } from '../models/Warrior';
+import { Mage } from '../models/Mage';
 
-type Personaje = [string, number,number];
-let Characters: Personaje[] = [];
+const characters: Character[] = [];
 
-function createCharacter(name:string, level:number, health:number) {
-    const newCharacter: Personaje = [name,level,health];
-    Characters.push(newCharacter)
-    console.log(`Personaje: ${name} agregado con exito!`);
-}
+// Crear un nuevo personaje
+export function createCharacter(type: string, name: string, level: number, health: number): Character | null {
+    let newCharacter: Character;
 
-function listCharacters(){
-    console.log("Lista de Personajes: ");
-    Characters.forEach((Character) => {
-        const [name,level,health] = Character
-        console.log(` Personaje: ${name}, Level: ${level}, Health: ${health}`);
-    })
-}
-
-function updateCharacter(indice:number,name?: string, level?: number, health?: number) {
-    if (Characters[indice]) {
-        if(name !== undefined) Characters[indice][0] = name
-        if(level !== undefined) Characters[indice][1] = level
-        if(health !== undefined) Characters[indice][2] = health
-        console.log(`Personaje: ${name} modificado con exito!`);
+    if (type === 'Mage') {
+        newCharacter = new Mage(name, level, health);
+    } else if (type === 'Warrior') {
+        newCharacter = new Warrior(name, level, health);
     } else {
-        console.log(`Personaje no encontrado`);
+        console.error('Tipo de personaje no válido');
+        return null; // Devuelve null en lugar de terminar con void
     }
-    
+
+    characters.push(newCharacter);
+    console.log(`Personaje: ${name} agregado con éxito!`);
+    return newCharacter; // Devuelve el nuevo personaje
+}
+// Listar todos los personajes
+export function listCharacters(): void {
+console.log("Lista de Personajes:");
+characters.forEach((character) => {
+    console.log(`Nombre: ${character.getName()}, Nivel: ${character.getLevel()}, Salud: ${character.getHealth()}`);
+});
 }
 
-function removeCharacter(characterName: string):void {
-    const index = Characters.findIndex(Character => Character.getName() === characterName);
-    if (index !== -1) {
-        this.characters.splice(index, 1);
-        console.log(`El personaje ${characterName} ha sido eliminado.`);
-    } else {
-        console.log(`El personaje ${characterName} no se encontró.`);
-  }
-  
- }
-
-
-
+// Actualizar un personaje
+export function updateCharacter(index: number, name?: string, level?: number, health?: number): void {
+const character = characters[index];
+if (character) {
+    if (name !== undefined) character.setName(name);
+    if (level !== undefined) character.setLevel(level);
+    if (health !== undefined) character.setHealth(health);
+    console.log(`Personaje modificado con éxito: ${character.getName()}`);
+} else {
+    console.log(`Personaje no encontrado`);
+}
+}
 
