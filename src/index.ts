@@ -1,4 +1,4 @@
-import { addCharacter, showAllCharacters, modifyCharacter, createMission, listAllMissions, assignMissionToCharacter} from './controllers/gameControllers';
+import  {addCharacter} from '../src/controllers/gameLogic'// , showAllCharacters, modifyCharacter, createMission, listAllMissions, assignMissionToCharacter} from 
 import { MissionType } from './models/Mission';
 
 const gandalf = addCharacter('Mage', 'Gandalf', 1, 100);

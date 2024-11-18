@@ -2,8 +2,8 @@
 import { Character } from './Characters';
 
 export class Mage extends Character {
-    private magicPower: number;
-    private mana: number;
+    public magicPower: number;
+    public mana: number;
 
     constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = [], magicPower: number = 15, mana: number = 100) {
         super(name, level, health, experience, inventory);
@@ -11,7 +11,7 @@ export class Mage extends Character {
         this.mana = mana;
     }
 
-/*
+
     getMagicPower(): number {
         return this.magicPower;
     }
@@ -27,7 +27,7 @@ export class Mage extends Character {
     setMana(mana: number): void {
         this.mana = mana;
     }
-*/
+
 
 
 attack(): void {
