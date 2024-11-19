@@ -1,4 +1,4 @@
-import { createCharacter, listCharacters, updateCharacter, deleteCharacter, assignMission, completeMission, triggerEvent, acceptMultipleMissions } from '../gameControllers';
+import { createCharacter, listCharacters, updateCharacter, deleteCharacter, assignMission, completeMission, triggerEvent, acceptMultipleMissions } from '../controllers/gameControllers';
 import { MissionType } from '../models/Mission';
 import { Character } from '../models/Characters';
 import { Warrior } from '../models/Warrior';
