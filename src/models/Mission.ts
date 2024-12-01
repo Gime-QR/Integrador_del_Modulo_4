@@ -1,26 +1,23 @@
-import { Character } from './Characters';
-
 export enum MissionType {
-    Main = "Main",
-    Side = "Side",
-    Event = "Event"
+    Main = "Main",  // Misión principal
+    Side = "Side",  // Misión secundaria
+    Event = "Event"  // Misión de evento
 }
 
 export class Mission {
-    private description: string;
-    private difficulty: number;
-    private reward: string;
-    private missionType: MissionType;
-    private completed: boolean; // Nueva propiedad para marcar la misión como completada
+    private description: string;  // Descripción de la misión
+    private difficulty: number;   // Nivel de dificultad de la misión
+    private reward: number;       // Recompensa al completar la misión
+    private missionType: MissionType;  // Tipo de misión (Main, Side, Event)
 
-    constructor(description: string, difficulty: number, reward: string, missionType: MissionType) {
+    constructor(description: string, difficulty: number, reward: number, missionType: MissionType) {
         this.description = description;
         this.difficulty = difficulty;
         this.reward = reward;
         this.missionType = missionType;
-        this.completed = false; // Inicializamos como no completada
     }
 
+    // Métodos de acceso (getters)
     getDescription(): string {
         return this.description;
     }
@@ -29,7 +26,7 @@ export class Mission {
         return this.difficulty;
     }
 
-    getReward(): string {
+    getReward(): number {
         return this.reward;
     }
 
@@ -37,36 +34,57 @@ export class Mission {
         return this.missionType;
     }
 
-    isCompleted(): boolean {
-        return this.completed; // Método para obtener el estado de la misión
-    }
-
+    // Métodos de modificación (setters)
     setDescription(description: string): void {
-        this.description = description;
+        try {
+            if (description && description.length > 0) {
+                this.description = description;
+            } else {
+                throw new Error("La descripción no puede estar vacía.");
+            }
+        } catch (error) {
+            console.error("Error al establecer la descripción:", error);
+        }
     }
 
     setDifficulty(difficulty: number): void {
-        if (difficulty >= 1 && difficulty <= 10) {
-            this.difficulty = difficulty;
+        try {
+            if (difficulty > 0) {
+                this.difficulty = difficulty;
+            } else {
+                throw new Error("La dificultad debe ser un número mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer la dificultad:", error);
         }
     }
 
-    setReward(reward: string): void {
-        this.reward = reward;
+    setReward(reward: number): void {
+        try {
+            if (reward > 0) {
+                this.reward = reward;
+            } else {
+                throw new Error("La recompensa debe ser mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer la recompensa:", error);
+        }
     }
 
     setMissionType(missionType: MissionType): void {
-        this.missionType = missionType;
+        try {
+            if (Object.values(MissionType).includes(missionType)) {
+                this.missionType = missionType;
+            } else {
+                throw new Error("Tipo de misión inválido.");
+            }
+        } catch (error) {
+            console.error("Error al establecer el tipo de misión:", error);
+        }
     }
 
-    // Método para completar la misión y entregar la recompensa
-    completeMission(character: Character): string {
-        if (this.completed) {
-            return `La misión "${this.description}" ya fue completada.`;
-        } else {
-            character.addItemToInventory(this.reward); // Añadir la recompensa al inventario del personaje
-            this.completed = true; // Marcar la misión como completada
-            return `La misión "${this.description}" ha sido completada. ${character.getName()} ha recibido ${this.reward}.`;
-        }
+    // Método para mostrar la información de la misión
+    getMissionInfo(): string {
+        return `Descripción: ${this.description}, Dificultad: ${this.difficulty}, Recompensa: ${this.reward}, Tipo de Misión: ${this.missionType}`;
     }
 }

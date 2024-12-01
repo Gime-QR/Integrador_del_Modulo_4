@@ -1,33 +1,19 @@
-// Characters
 export class Character {
-    protected name: string;
-    protected level: number;
-    protected health: number;
-    protected experience: number;
-    protected inventory: string[];
+    private name: string;
+    private level: number;
+    private health: number;
+    private experience: number;
+    private inventory: string[];
 
-    constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = []) {
+    constructor(name: string, level: number, health: number) {
         this.name = name;
         this.level = level;
         this.health = health;
-        this.experience = experience;
-        this.inventory = inventory;
-    }
-    
-//Polimorfismo para ejecutar estas acciones de forma diferente según el tipo de personaje 
-    attack(): void {
-        console.log(`${this.name} realiza un ataque básico.`);
-    }
-    
-    move(): void {
-        console.log(`${this.name} se mueve.`);
+        this.experience = 0;
+        this.inventory = [];
     }
 
-
-    getStatus(): string {
-        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: [${this.inventory.join(", ")}]`;
-    }
-
+    // Métodos para obtener los valores de los atributos
     getName(): string {
         return this.name;
     }
@@ -48,49 +34,94 @@ export class Character {
         return this.inventory;
     }
 
+    // Métodos para modificar los valores de los atributos
     setName(name: string): void {
-        this.name = name;
+        try {
+            if (name.length > 0) {
+                this.name = name;
+            } else {
+                throw new Error("El nombre no puede estar vacío.");
+            }
+        } catch (error) {
+            console.error("Error al establecer el nombre:", error);
+        }
     }
 
     setLevel(level: number): void {
-        if (level > 0) this.level = level;
+        try {
+            if (level > 0) {
+                this.level = level;
+            } else {
+                throw new Error("El nivel debe ser mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer el nivel:", error);
+        }
     }
 
     setHealth(health: number): void {
-        if (health >= 0) this.health = health;
+        try {
+            if (health > 0) {
+                this.health = health;
+            } else {
+                throw new Error("La salud debe ser mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer la salud:", error);
+        }
     }
 
-    setExperience(experience: number): void {
-        if (experience >= 0) this.experience = experience;
+    setExperience(health: number): void {
+        try {
+            if (health > 0) {
+                this.health = health;
+            } else {
+                throw new Error("La salud debe ser mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer la salud:", error);
+        }
     }
 
-    setInventory(inventory: string[]): void {
-        this.inventory = inventory;
+    addExperience(amount: number): void {
+        try {
+            if (amount > 0) {
+                this.experience += amount;
+            } else {
+                throw new Error("La cantidad de experiencia debe ser positiva.");
+            }
+        } catch (error) {
+            console.error("Error al agregar experiencia:", error);
+        }
     }
 
-// Métodos adicionales
     addItemToInventory(item: string): void {
-        this.inventory.push(item);
+        try {
+            if (item && item.length > 0) {
+                this.inventory.push(item);
+            } else {
+                throw new Error("El artículo no puede estar vacío.");
+            }
+        } catch (error) {
+            console.error("Error al agregar artículo al inventario:", error);
+        }
     }
 
     removeItemFromInventory(item: string): void {
-        const index = this.inventory.indexOf(item);
-        if (index !== -1) {
-            this.inventory.splice(index, 1);
+        try {
+            const index = this.inventory.indexOf(item);
+            if (index !== -1) {
+                this.inventory.splice(index, 1);
+            } else {
+                throw new Error(`El artículo '${item}' no está en el inventario.`);
+            }
+        } catch (error) {
+            console.error("Error al eliminar artículo del inventario:", error);
         }
     }
 
-    gainExperience(amount: number): void {
-        if (amount > 0) {
-            this.experience += amount;
-        }
-    }
-
-    levelUp(): void {
-        if (this.experience >= 100) {
-            this.level++;
-            this.experience = 0;
-            console.log(`${this.name} ha subido al nivel ${this.level}!`);
-        }
+    // Método para mostrar la información del personaje
+    getCharacterInfo(): string {
+        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: [${this.inventory.join(", ")}]`;
     }
 }

@@ -9,9 +9,9 @@ export function createCharacter(type: string, name: string, level: number, healt
     let newCharacter: Character;
 
     if (type === 'Mage') {
-        newCharacter = new Mage(name, level, health);
+        newCharacter = new Mage("Harry", 4, 20, 5, 6);
     } else if (type === 'Warrior') {
-        newCharacter = new Warrior(name, level, health);
+        newCharacter = new Warrior("Leonardo", 5, 30, 6, 7);
     } else {
         console.error('Tipo de personaje no válido');
         return null; // Devuelve null en lugar de terminar con void
@@ -21,6 +21,7 @@ export function createCharacter(type: string, name: string, level: number, healt
     console.log(`Personaje: ${name} agregado con éxito!`);
     return newCharacter; // Devuelve el nuevo personaje
 }
+
 // Listar todos los personajes
 export function listCharacters(): void {
 console.log("Lista de Personajes:");

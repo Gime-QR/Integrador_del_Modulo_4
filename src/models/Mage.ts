@@ -1,17 +1,16 @@
-// Mage (sub clase)
-import { Character } from './Characters';
+import { Character } from './Characters';  // Importar la clase base Character
 
 export class Mage extends Character {
-    private magicPower: number;
-    private mana: number;
+    private magicPower: number;  // Poder mágico del mago
+    private mana: number;  // Mana del mago
 
-    constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = [], magicPower: number = 15, mana: number = 100) {
-        super(name, level, health, experience, inventory);
+    constructor(name: string, level: number, health: number, magicPower: number, mana: number) {
+        super(name, level, health);  // Llamar al constructor de la clase base
         this.magicPower = magicPower;
         this.mana = mana;
     }
 
-/*
+    // Métodos de acceso (getters) para los atributos adicionales
     getMagicPower(): number {
         return this.magicPower;
     }
@@ -20,43 +19,61 @@ export class Mage extends Character {
         return this.mana;
     }
 
+    // Métodos de modificación (setters) para los atributos adicionales
     setMagicPower(magicPower: number): void {
-        this.magicPower = magicPower;
-    }
-
-    setMana(mana: number): void {
-        this.mana = mana;
-    }
-*/
-
-
-attack(): void {
-    if (this.mana >= 10) {
-this.mana -= 10;
-console.log(`${this.name} lanza un hechizo con poder mágico de ${this.magicPower}.`);
-    } else {
-console.log(`${this.name} no tiene suficiente mana para lanzar un hechizo.`);
-    }
-}
-
-move(): void {
-    console.log(`${this.name} se teletransporta.`);
-}
-// Método de recuperación de maná
-recoverMana(amount: number): void {
-    this.mana += amount;
-    console.log(`${this.name} ha recuperado ${amount} de mana. Mana actual: ${this.mana}.`);
-}
-// Método específico para Mage
-    castSpell(): number | string {
-        if (this.mana >= 10) {
-            this.mana -= 10;
-            console.log(`${this.name} ha lanzado un hechizo con poder mágico de ${this.magicPower}`);
-            return this.magicPower; // Retornamos el daño causado
-        } else {
-            console.log(`${this.name} no tiene suficiente mana para lanzar un hechizo.`);
-            return `${this.name} no tiene suficiente mana para lanzar un hechizo.`;
+        try {
+            if (magicPower > 0) {
+                this.magicPower = magicPower;
+            } else {
+                throw new Error("El poder mágico debe ser mayor que cero.");
+            }
+        } catch (error) {
+            console.error("Error al establecer el poder mágico:", error);
         }
     }
 
+    setMana(mana: number): void {
+        try {
+            if (mana >= 0) {  // El mana no puede ser negativo
+                this.mana = mana;
+            } else {
+                throw new Error("El mana no puede ser negativo.");
+            }
+        } catch (error) {
+            console.error("Error al establecer el mana:", error);
+        }
+    }
+
+    // Método para lanzar un hechizo
+    castSpell(spellCost: number): void {
+        try {
+            if (this.mana >= spellCost) {
+                this.mana -= spellCost;  // Reducir mana por el coste del hechizo
+                console.log(`${this.getName()} ha lanzado un hechizo exitosamente.`);
+            } else {
+                throw new Error(`No tienes suficiente mana para lanzar este hechizo. Mana restante: ${this.mana}`);
+            }
+        } catch (error) {
+            console.error("Error al lanzar hechizo:", error);
+        }
+    }
+
+    // Método para regenerar mana
+    regenerateMana(amount: number): void {
+        try {
+            if (amount > 0) {
+                this.mana += amount;
+                console.log(`${this.getName()} ha regenerado ${amount} de mana. Mana actual: ${this.mana}`);
+            } else {
+                throw new Error("La cantidad de mana a regenerar debe ser positiva.");
+            }
+        } catch (error) {
+            console.error("Error al regenerar mana:", error);
+        }
+    }
+
+    // Método para mostrar información del Mage
+    getMageInfo(): string {
+        return `${this.getCharacterInfo()}, Poder Mágico: ${this.magicPower}, Mana: ${this.mana}`;
+    }
 }
