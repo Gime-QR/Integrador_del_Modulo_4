@@ -4,7 +4,7 @@ import { Mission } from '../models/Mission';
 
 
 // Paso 1: Crear personajes
-const thor = createCharacter('Thor', 5, 150, 'Warrior');
+const thor = createCharacter('Thor',5, 150, 'Warrior');
 const merlin = createCharacter('Merlin', 6, 100, 'Mage');
 const artemis = createCharacter('Artemis', 3, 120, 'Warrior');
 

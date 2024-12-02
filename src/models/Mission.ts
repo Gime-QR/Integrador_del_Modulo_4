@@ -6,7 +6,7 @@ export enum MissionType {
     Event = "Event"
 }
 
-export class Mission {
+export default class Mission {
     private description: string;
     private difficulty: number;
     private reward: string;
@@ -64,7 +64,7 @@ export class Mission {
         if (this.completed) {
             return `La misión "${this.description}" ya fue completada.`;
         } else {
-            character.addItemToInventory(this.reward); // Añadir la recompensa al inventario del personaje
+            character.addToInventory(this.reward); // Añadir la recompensa al inventario del personaje
             this.completed = true; // Marcar la misión como completada
             return `La misión "${this.description}" ha sido completada. ${character.getName()} ha recibido ${this.reward}.`;
         }

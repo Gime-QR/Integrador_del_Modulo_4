@@ -6,7 +6,7 @@ export class Character {
     protected inventory: string[];
 
 // Constructor para inicializar el personaje con valores por defecto
-    constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = []) {
+    constructor(name :string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = []) {
     this.name = name;
     this.level = level;
     this.health = health;
