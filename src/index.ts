@@ -50,3 +50,95 @@ updateCharacter(2, 'Artemis', 5, 130); // Subir nivel y salud de Artemis
 main().catch((error) => {
     console.error("Error en la ejecución del juego:", error);
 });
+
+//Menu://
+const prompt = require('prompt-sync')();
+
+// Mostrar el menú principal
+function showMenu() {
+    console.log("\n--- Menú Principal ---");
+    console.log("1. Crear personaje");
+    console.log("2. Listar personajes");
+    console.log("3. Eliminar personaje");
+    console.log("4. Asignar misión");
+    console.log("5. Completar misión");
+    console.log("6. Activar evento aleatorio");
+    console.log("7. Salir");
+}
+
+// Ejecutar el menú principal
+function mainMenu() {
+    let exit = false;
+
+    while (!exit) {
+        showMenu();
+        const choice = prompt("Selecciona una opción: ");
+
+        switch (choice) {
+            case "1": {
+                const name = prompt("Nombre del personaje: ");
+                const type = prompt("Tipo (Warrior/Mage): ");
+                const level = parseInt(prompt("Nivel inicial: "));
+                const health = parseInt(prompt("Salud inicial: "));
+                const attr1 = parseInt(prompt(type === "Warrior" ? "Ataque inicial: " : "Poder mágico inicial: "));
+                const attr2 = parseInt(prompt(type === "Warrior" ? "Defensa inicial: " : "Mana inicial: "));
+                createCharacter(name, level, health, type as "Warrior" | "Mage", attr1, attr2);
+                break;
+            }
+            case "2":
+                console.log("Lista de personajes:");
+                listCharacters().forEach(c => console.log(c.getCharacterInfo()));
+                break;
+            case "3": {
+                const name = prompt("Nombre del personaje a eliminar: ");
+                deleteCharacter(name);
+                break;
+            }
+            case "4": {
+                const name = prompt("Nombre del personaje: ");
+                const character = listCharacters().find(c => c.getName() === name);
+                if (!character) {
+                    console.log("Personaje no encontrado.");
+                    break;
+                }
+                const description = prompt("Descripción de la misión: ");
+                const difficulty = parseInt(prompt("Dificultad: "));
+                const reward = parseInt(prompt("Recompensa: "));
+                const missionType = prompt("Tipo de misión (Main/Side/Event): ") as MissionType;
+                assignMission(character, description, difficulty, reward, missionType);
+                break;
+            }
+            case "5": {
+                const name = prompt("Nombre del personaje: ");
+                const character = listCharacters().find(c => c.getName() === name);
+                if (!character) {
+                    console.log("Personaje no encontrado.");
+                    break;
+                }
+                const missionDescription = prompt("Descripción de la misión a completar: ");
+                const mission = assignMission(character, missionDescription, 0, 0, MissionType.Main); // Aquí deberías buscar la misión real
+                completeMission(character, mission).then(console.log).catch(console.error);
+                break;
+            }
+            case "6": {
+                const name = prompt("Nombre del personaje para el evento: ");
+                const character = listCharacters().find(c => c.getName() === name);
+                if (!character) {
+                    console.log("Personaje no encontrado.");
+                    break;
+                }
+                triggerEvent(character);
+                break;
+            }
+            case "7":
+                console.log("Saliendo del juego. ¡Hasta pronto!");
+                exit = true;
+                break;
+            default:
+                console.log("Opción no válida. Intenta de nuevo.");
+        }
+    }
+}
+
+// Iniciar el menú principal
+mainMenu();
