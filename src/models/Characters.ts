@@ -1,4 +1,3 @@
-// Characters
 export class Character {
     protected name: string;
     protected level: number;
@@ -6,91 +5,109 @@ export class Character {
     protected experience: number;
     protected inventory: string[];
 
+// Constructor para inicializar el personaje con valores por defecto
     constructor(name: string, level: number = 1, health: number = 100, experience: number = 0, inventory: string[] = []) {
-        this.name = name;
-        this.level = level;
-        this.health = health;
-        this.experience = experience;
-        this.inventory = inventory;
-    }
-    
-//Polimorfismo para ejecutar estas acciones de forma diferente según el tipo de personaje 
-    attack(): void {
-        console.log(`${this.name} realiza un ataque básico.`);
-    }
-    
-    move(): void {
-        console.log(`${this.name} se mueve.`);
+    this.name = name;
+    this.level = level;
+    this.health = health;
+    this.experience = experience;
+    this.inventory = inventory;
     }
 
-
-    getStatus(): string {
-        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: [${this.inventory.join(", ")}]`;
-    }
-
+// Métodos getter y setter para el nombre
     getName(): string {
-        return this.name;
-    }
-
-    getLevel(): number {
-        return this.level;
-    }
-
-    getHealth(): number {
-        return this.health;
-    }
-
-    getExperience(): number {
-        return this.experience;
-    }
-
-    getInventory(): string[] {
-        return this.inventory;
+    return this.name;
     }
 
     setName(name: string): void {
-        this.name = name;
+    this.name = name;
+    }
+
+// Métodos getter y setter para el nivel
+    getLevel(): number {
+    return this.level;
     }
 
     setLevel(level: number): void {
-        if (level > 0) this.level = level;
+    if (level > 0) {
+        this.level = level;
+    } else {
+        console.error("El nivel debe ser mayor que 0.");
+    }
+    }
+
+// Métodos getter y setter para la salud
+    getHealth(): number {
+    return this.health;
     }
 
     setHealth(health: number): void {
-        if (health >= 0) this.health = health;
+    if (health >= 0) {
+        this.health = health;
+    } else {
+        console.error("La salud no puede ser negativa.");
+    }
+    }
+
+// Métodos getter y setter para la experiencia
+    getExperience(): number { 
+    return this.experience;
     }
 
     setExperience(experience: number): void {
-        if (experience >= 0) this.experience = experience;
+    if (experience >= 0) {
+        this.experience = experience;
+    } else {
+        console.error("La experiencia no puede ser negativa.");
+    }
+    }
+
+// Métodos getter y setter para el inventario
+    getInventory(): string[] {
+    return this.inventory;
     }
 
     setInventory(inventory: string[]): void {
-        this.inventory = inventory;
+    this.inventory = inventory;
     }
 
-// Métodos adicionales
-    addItemToInventory(item: string): void {
-        this.inventory.push(item);
-    }
-
-    removeItemFromInventory(item: string): void {
-        const index = this.inventory.indexOf(item);
-        if (index !== -1) {
-            this.inventory.splice(index, 1);
-        }
-    }
-
-    gainExperience(amount: number): void {
-        if (amount > 0) {
-            this.experience += amount;
-        }
-    }
-
+// Método para aumentar el nivel
     levelUp(): void {
-        if (this.experience >= 100) {
-            this.level++;
-            this.experience = 0;
-            console.log(`${this.name} ha subido al nivel ${this.level}!`);
-        }
+    this.level += 1;
+    console.log(`${this.name} ha subido de nivel! Ahora está en el nivel ${this.level}.`);
+    }
+
+// Método para reducir la salud (cuando recibe daño)
+    takeDamage(amount: number): void {
+    this.health -= amount;
+      if (this.health < 0) this.health = 0; // Evitar que la salud sea negativa
+    console.log(`${this.name} ha recibido ${amount} de daño. Salud restante: ${this.health}`);
+    }
+
+// Método para ganar experiencia
+    gainExperience(amount: number): void {
+    this.experience += amount;
+    console.log(`${this.name} ha ganado ${amount} de experiencia. Experiencia total: ${this.experience}`);
+    if (this.experience >= 100) {
+        this.levelUp();
+        this.experience -= 100;
+    }
+    }
+
+// Método para agregar un ítem al inventario
+    addToInventory(item: string): void {
+    this.inventory.push(item);
+    console.log(`${item} ha sido añadido al inventario de ${this.name}.`);
+    }
+
+// Mostrar el estado actual del personaje
+    showStatus(): void {
+    console.log(`
+        Nombre: ${this.name}
+        Nivel: ${this.level}
+        Salud: ${this.health}
+        Experiencia: ${this.experience}
+        Inventario: ${this.inventory.join(', ') || 'Vacío'}
+    `);
     }
 }
