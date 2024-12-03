@@ -4,8 +4,8 @@ export class Mage extends Character {
     private magicPower: number;  // Poder mágico del mago
     private mana: number;  // Mana del mago
 
-    constructor(name: string, level: number, health: number, magicPower: number, mana: number) {
-        super(name, level, health);  // Llamar al constructor de la clase base
+    constructor(name: string, level: number, health: number, magicPower: number, mana: number, experience: number, inventory: string []) {
+        super(name, level, health, experience, inventory);  // Llamar al constructor de la clase base
         this.magicPower = magicPower;
         this.mana = mana;
     }

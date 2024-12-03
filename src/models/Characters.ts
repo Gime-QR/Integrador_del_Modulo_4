@@ -5,12 +5,12 @@ export class Character {
     private experience: number;
     private inventory: string[];
 
-    constructor(name: string, level: number, health: number) {
+    constructor(name: string, level: number, health: number, experience: number, inventory: string[]) {
         this.name = name;
         this.level = level;
         this.health = health;
-        this.experience = 0;
-        this.inventory = [];
+        this.experience = experience;
+        this.inventory = inventory;
     }
 
     // Métodos para obtener los valores de los atributos
@@ -122,6 +122,6 @@ export class Character {
 
     // Método para mostrar la información del personaje
     getCharacterInfo(): string {
-        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: [${this.inventory.join(", ")}]`;
+        return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: ${this.inventory}`;
     }
 }

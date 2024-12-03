@@ -3,12 +3,12 @@ import { Character } from './Characters';  // Importar la clase base Character
 export class Warrior extends Character {
     private attack: number;  // Atributo de ataque del guerrero
     private defense: number;  // Atributo de defensa del guerrero
-
-    constructor(name: string, level: number, health: number, attack: number, defense: number) {
-        super(name, level, health);  // Llamar al constructor de la clase base
+    
+    constructor(name: string, level: number, health: number, attack: number, defense: number, experience: number, inventory: string []) {
+        super(name, level, health, experience, inventory);  // Llamar al constructor de la clase base
         this.attack = attack;
         this.defense = defense;
-    }
+        }
 
     // Métodos de acceso (getters) para los atributos adicionales
     getAttack(): number {
