@@ -79,11 +79,12 @@ export function completeMission(character: Character, mission: Mission): Promise
 
 export async function triggerEvent(character: Character): Promise<void> {
   try {
-      console.log(`Evento aleatorio activado para ${character.getName()}...`);
+      console.log(`Calculando el resultado de la mision del personaje ${character.getName()}...`);
       
       // Simular un evento de espera con un retraso aleatorio
       const randomDelay = Math.floor(Math.random() * 3000) + 1000;  // Tiempo entre 1-4 segundos
-      console.log(`Esperando ${randomDelay / 1000} segundos para resolver el evento...`);
+      //console.log(`Esperando ${randomDelay / 1000} segundos para resolver el evento...`);
+      console.log(`Esperando resultado ...`)
       await new Promise(resolve => setTimeout(resolve, randomDelay));
       
       // Simular un resultado del evento
@@ -105,53 +106,4 @@ export async function triggerEvent(character: Character): Promise<void> {
   } catch (error) {
       console.error("Error al activar el evento:", error);
   }
-}
-
-
-// Función para aceptar múltiples misiones
-export async function acceptMultipleMissions(character: Character, missionsList: Mission[]): Promise<void> {
-    for (let mission of missionsList) {
-        try {
-            await completeMission(character, mission);
-            console.log(`Misión completada: ${mission.getDescription()}`);
-        } catch (error) {
-            console.error(error);
-            break;  // Si falla una misión, interrumpimos el ciclo
-        }
-    }
-}
-
-// Función para encadenar misiones usando promesas
-export function acceptMissionsWithPromises(character: Character, missionsList: Mission[]): void {
-    let promiseChain = Promise.resolve();
-
-    missionsList.forEach(mission => {
-        promiseChain = promiseChain.then(() => {
-            return completeMission(character, mission).then(result => {
-                console.log(result);
-            }).catch(error => {
-                console.error(error);
-            });
-        });
-    });
-}
-
-// Función para aceptar misiones con un callback
-export function acceptMissionsWithCallback(character: Character, missionsList: Mission[], callback: (result: string) => void): void {
-    let currentMissionIndex = 0;
-
-    function completeNextMission(): void {
-        if (currentMissionIndex < missionsList.length) {
-            const mission = missionsList[currentMissionIndex];
-            completeMission(character, mission).then(result => {
-                callback(result);
-                currentMissionIndex++;
-                completeNextMission();  // Llamamos recursivamente para la siguiente misión
-            }).catch(error => {
-                callback(error);  // Si falla, llamamos al callback con el error
-            });
-        }
-    }
-
-    completeNextMission();  // Iniciamos el proceso de completar misiones
 }

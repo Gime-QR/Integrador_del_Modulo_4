@@ -1,9 +1,9 @@
-import { updateCharacter, createCharacter, listCharacters, deleteCharacter, assignMission, completeMission, triggerEvent, acceptMultipleMissions } from './controllers/gameControllers';
+import { updateCharacter, createCharacter, listCharacters, deleteCharacter, assignMission, completeMission, triggerEvent} from './controllers/gameControllers';
 import { MissionType } from './models/Mission';
 import { Character} from './models/Characters';
 import { Warrior } from './models/Warrior';
 import { Mage } from './models/Mage';
-import {  } from './controllers/gameLogic';
+import { acceptMissionsWithCallback,acceptMissionsWithPromises,acceptMultipleMissions } from './controllers/gameLogic';
 
 async function main() {
     // Crear personajes name, level, health, type as "Warrior" | "Mage", attr1, experience, inventory)
@@ -141,10 +141,11 @@ function mainMenu() {
                     console.log("Personaje no encontrado.");
                     break;
                 }
-                const missionDescription = prompt("Descripción de la misión a completar: ");
-                const mission = assignMission(character, missionDescription, 15, 0, MissionType.Main); // Aquí deberías buscar la misión real
-                completeMission(character, mission).then(console.log).catch(console.error);
-                break;
+                const missionDescription = prompt(`"Descripción de la misión a completar: "`);
+              const mission2 = assignMission(character, missionDescription, 15,0, MissionType.Main); // Aquí deberías buscar la misión real
+              completeMission(character, mission2).then(console.log).catch(console.error);
+            
+           break;
             }
             case "7": { // Activar evento aleatorio
                 const name = prompt("Nombre del personaje para el evento: ");
