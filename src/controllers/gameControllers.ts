@@ -6,24 +6,23 @@ import { calculateExperience } from '../gameHelpers';
 
 
 // Lista de personajes y misiones
-let characters: Character[] = [];
-let missions: Mission[] = [];
+export let characters: Character[] = [];
+export let missions: Mission[] = [];
 
 // Crear un nuevo personaje
 export function createCharacter(name: string, level: number, health: number, type: "Warrior" | "Mage", attackOrMagicPower: number, defenseOrMana: number, experience: number, inventory: string[] = []): Character {
-    let character: Character;
+  let character: Character;
 
-    if (type === "Warrior") {
-        character = new Warrior(name, level, health, attackOrMagicPower, defenseOrMana, experience, inventory);
-    } else if (type === "Mage") {
-        character = new Mage(name, level, health, attackOrMagicPower, defenseOrMana, experience, inventory);
-    } else {
-        throw new Error("Tipo de personaje inválido.");
-    }
+  if (type === "Warrior") {
+      character = new Warrior(name, level, health, attackOrMagicPower, defenseOrMana, experience, inventory);
+  } else if (type === "Mage") {
+      character = new Mage(name, level, health, attackOrMagicPower, defenseOrMana, experience, inventory);
+  } else {
+      throw new Error("Tipo de personaje inválido.");
+  }
 
-    characters.push(character);
-    console.log(`${name} ha sido creado como ${type}.`);
-    return character;
+  characters.push(character);  // Agrega el personaje a la lista
+  return character;
 }
 
 // Listar todos los personajes
@@ -44,22 +43,22 @@ export function deleteCharacter(name: string): void {
 }
 
 // Actualizar un personaje
-export function updateCharacter(index: number, name?: string, level?: number, health?: number): void {
-  const character = characters[index];
+export function updateCharacter(name: string, newName?: string, newLevel?: number, newHealth?: number): void {
+  const character = characters.find(c => c.getName() === name);
   if (character) {
-      if (name !== undefined) character.setName(name);
-      if (level !== undefined) character.setLevel(level);
-      if (health !== undefined) character.setHealth(health);
+      if (newName !== undefined) character.setName(newName);
+      if (newLevel !== undefined) character.setLevel(newLevel);
+      if (newHealth !== undefined) character.setHealth(newHealth);
       console.log(`Personaje modificado con éxito: ${character.getName()}`);
   } else {
+      console.log("Personaje no encontrado.");
   }
-  }
+}
 
 // Asignar una misión a un personaje
 export function assignMission(character: Character, description: string, difficulty: number, reward: number, missionType: MissionType): Mission {
     const mission = new Mission(description, difficulty, reward, missionType);
     missions.push(mission);
-    console.log(`${character.getName()} ha recibido una nueva misión: ${description}`);
     return mission;
 }
 
@@ -79,17 +78,15 @@ export function completeMission(character: Character, mission: Mission): Promise
 
 export async function triggerEvent(character: Character): Promise<void> {
   try {
-      console.log(`Calculando el resultado de la mision del personaje ${character.getName()}...`);
+      console.log(`Calculando el resultado de la misión del personaje ${character.getName()}...`);
       
       // Simular un evento de espera con un retraso aleatorio
       const randomDelay = Math.floor(Math.random() * 3000) + 1000;  // Tiempo entre 1-4 segundos
-      //console.log(`Esperando ${randomDelay / 1000} segundos para resolver el evento...`);
-      console.log(`Esperando resultado ...`)
+      console.log(`Esperando resultado...`);
       await new Promise(resolve => setTimeout(resolve, randomDelay));
       
       // Simular un resultado del evento
       const eventOutcome = Math.random() > 0.5 ? "evento positivo" : "evento negativo";
-      console.log(`Resultado del evento: ${eventOutcome}`);
       
       if (eventOutcome === "evento positivo") {
           const reward = Math.floor(Math.random() * 500) + 100;  // Recompensa aleatoria entre 100 y 500
@@ -100,10 +97,12 @@ export async function triggerEvent(character: Character): Promise<void> {
           character.setHealth(character.getHealth() - damage);
           console.log(`${character.getName()} ha tenido un ${eventOutcome} y ha perdido ${damage} de salud.`);
       }
-
-      console.log(`Estado actual de ${character.getName()}:`);
-      console.log(`Salud: ${character.getHealth()}, Experiencia: ${character.getExperience()}`);
   } catch (error) {
       console.error("Error al activar el evento:", error);
   }
+}
+
+// Exportar la lista de misiones
+export function getMissions(): Mission[] {
+  return missions;
 }

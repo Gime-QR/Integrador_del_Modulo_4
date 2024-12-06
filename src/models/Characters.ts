@@ -71,17 +71,18 @@ export class Character {
         }
     }
 
-    setExperience(health: number): void {
+    setExperience(experience: number): void {
         try {
-            if (health > 0) {
-                this.health = health;
+            if (experience >= 0) { // La experiencia puede ser 0 o mayor
+                this.experience = experience;
             } else {
-                throw new Error("La salud debe ser mayor que cero.");
+                throw new Error("La experiencia debe ser mayor o igual a cero.");
             }
         } catch (error) {
-            console.error("Error al establecer la salud:", error);
+            console.error("Error al establecer la experiencia:", error);
         }
     }
+    
 
     addExperience(amount: number): void {
         try {

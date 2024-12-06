@@ -48,13 +48,13 @@ export class Warrior extends Character {
     attackEnemy(enemy: Character): void {
         try {
             const damage = Math.max(this.attack - enemy.getLevel(), 0);  // El daño depende del nivel del enemigo
-            enemy.setHealth(enemy.getHealth() - damage);
+            const newHealth = Math.max(enemy.getHealth() - damage, 1);  // Asegura que la salud no sea negativa
+            enemy.setHealth(newHealth);
             console.log(`${this.getName()} atacó a ${enemy.getName()} causando ${damage} de daño.`);
         } catch (error) {
             console.error("Error al atacar al enemigo:", error);
         }
-    }
-
+}
     // Método para defenderse de un ataque
     defendFromAttack(damage: number): void {
         try {

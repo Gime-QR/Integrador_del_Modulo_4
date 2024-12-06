@@ -56,7 +56,8 @@ export class Mage extends Character {
         } catch (error) {
             console.error("Error al lanzar hechizo:", error);
         }
-    }
+}
+
 
     // Método para regenerar mana
     regenerateMana(amount: number): void {
