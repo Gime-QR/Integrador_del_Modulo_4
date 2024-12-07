@@ -23,13 +23,12 @@ export function createCharacter(name: string, level: number, health: number, typ
 
   characters.push(character);  // Agrega el personaje a la lista
   return character;
-}
 
+}
 // Listar todos los personajes
 export function listCharacters(): Character[] {
     return characters;
 }
-
 // Eliminar un personaje
 export function deleteCharacter(name: string): void {
     const index = characters.findIndex(c => c.getName() === name);

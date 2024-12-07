@@ -6,7 +6,7 @@ import { Mission } from '../models/Mission';
 
 
 
-const characters: Character[] = [];
+//const characters: Character[] = [];
 
 
 // Función para aceptar múltiples misiones
