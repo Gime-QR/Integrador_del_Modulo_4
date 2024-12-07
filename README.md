@@ -24,6 +24,26 @@ Ejecuta el siguiente comando para instalar todas las dependencias listadas en el
 - **npm install typescript ts-node 
 - **npx tsc --init 
 
+
+### Estructura del Proyecto
+Sigue las siguientes covenciones:
+
+**src/**: Carpeta de origen del proyecto.
+
+**controllers/**: 
+
+- **gameController.ts/** : Archivo 
+
+**models/**: 
+
+- **Characters.ts/**: Archivo donde se crea la estructura de los personajes y métodos.
+- **Mage.ts/**: Gestiona las operaciones relacionadas con la Magia (como se extiende a los personajes, el poder y la cantidad de mana).
+- **Misiion.ts/**: Gestiona las operaciones en cuánto a las misiones (descripción, dificultad, entrega de recompensa).
+- **Warrior.ts/**: Gestiona las operaciones relacionadas en cuánto a la defensa, ataques, resistencia durante en videojuego.
+
+**index.ts/**: Archivo que gestiona las creaciones de personajes y misiones, asignacion de misiones, actualización de personajes. Además de las actualizaciones luego de cada misión.
+
+
 ## Funciones y posibles respuestas del videojuegos
 
 ### Personajes (Characters)
@@ -38,20 +58,3 @@ Ejecuta el siguiente comando para instalar todas las dependencias listadas en el
 - Asignación de misiones a cada personaje
 - Visualización de misiones después de completarlas
 - Visualización de misiones luego de la actualización de personajes
-
-
-
-### Estructura del Proyecto
-Sigue las siguientes covenciones:
-
-**src/**: Carpeta de origen del proyecto.
-
-
-**models/**: 
-
-- **Characters.ts/**: Archivo donde se crea la estructura de los personajes y métodos.
-- **Mage.ts/**: Gestiona las operaciones relacionadas con la Magia (como se extiende a los personajes, el poder y la cantidad de mana).
-- **Misiion.ts/**: Gestiona las operaciones en cuánto a las misiones (descripción, dificultad, entrega de recompensa).
-- **Warrior.ts/**: Gestiona las operaciones relacionadas en cuánto a la defensa, ataques, resistencia durante en videojuego.
-
-**index.ts/**: Archivo que gestiona las creaciones de personajes y misiones, asignacion de misiones, actualización de personajes. Además de las actualizaciones luego de cada misión.

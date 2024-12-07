@@ -56,11 +56,11 @@ export function updateCharacter(index: number, name?: string, level?: number, he
   }
 
 // Asignar una misión a un personaje
-export function assignMission(character: Character, description: string, difficulty: number, reward: number, missionType: MissionType): Mission {
+export function assignMission(character: Character, description: string, difficulty: number, reward: number, missionType: MissionType):any {
     const mission = new Mission(description, difficulty, reward, missionType);
     missions.push(mission);
     console.log(`${character.getName()} ha recibido una nueva misión: ${description}`);
-    return mission;
+return mission;
 }
 
 // Completar una misión
@@ -79,19 +79,16 @@ export function completeMission(character: Character, mission: Mission): Promise
 
 export async function triggerEvent(character: Character): Promise<void> {
   try {
-      console.log(`Calculando el resultado de la mision del personaje ${character.getName()}...`);
-      
       // Simular un evento de espera con un retraso aleatorio
       const randomDelay = Math.floor(Math.random() * 3000) + 1000;  // Tiempo entre 1-4 segundos
-      //console.log(`Esperando ${randomDelay / 1000} segundos para resolver el evento...`);
-      console.log(`Esperando resultado ...`)
+     
+      console.log(`Esperando resultado de la misión del personaje ${character.getName()}...`)
       await new Promise(resolve => setTimeout(resolve, randomDelay));
       
       // Simular un resultado del evento
       const eventOutcome = Math.random() > 0.5 ? "evento positivo" : "evento negativo";
-      console.log(`Resultado del evento: ${eventOutcome}`);
-      
-      if (eventOutcome === "evento positivo") {
+     
+  if (eventOutcome === "evento positivo") {
           const reward = Math.floor(Math.random() * 500) + 100;  // Recompensa aleatoria entre 100 y 500
           character.setExperience(character.getExperience() + reward);
           console.log(`${character.getName()} ha tenido un ${eventOutcome} y ha ganado ${reward} puntos de experiencia.`);
@@ -100,6 +97,7 @@ export async function triggerEvent(character: Character): Promise<void> {
           character.setHealth(character.getHealth() - damage);
           console.log(`${character.getName()} ha tenido un ${eventOutcome} y ha perdido ${damage} de salud.`);
       }
+    //  console.log(`Resultado del evento: ${eventOutcome}`);
 
       console.log(`Estado actual de ${character.getName()}:`);
       console.log(`Salud: ${character.getHealth()}, Experiencia: ${character.getExperience()}`);

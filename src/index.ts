@@ -1,28 +1,29 @@
-import { updateCharacter, createCharacter, listCharacters, deleteCharacter, assignMission, completeMission, triggerEvent} from './controllers/gameControllers';
+import { updateCharacter, createCharacter, listCharacters, deleteCharacter, assignMission, completeMission, triggerEvent } from './controllers/gameControllers';
 import { MissionType } from './models/Mission';
-import { Character} from './models/Characters';
+import { Character } from './models/Characters';
 import { Warrior } from './models/Warrior';
 import { Mage } from './models/Mage';
-import { acceptMissionsWithCallback,acceptMissionsWithPromises,acceptMultipleMissions } from './controllers/gameLogic';
+import { acceptMissionsWithCallback, acceptMissionsWithPromises, acceptMultipleMissions } from './controllers/gameLogic';
+import { calculateExperience, calculateMagicDamage, calculateMissionSuccessProbability, checkMissionSuccess } from './gameHelpers';
 
 async function main() {
     // Crear personajes name, level, health, type as "Warrior" | "Mage", attr1, experience, inventory)
     const warrior: Warrior = createCharacter("Arthur", 10, 50, "Warrior", 150, 40, 0, []) as Warrior;
     const mage: Mage = createCharacter("Gandalf", 12, 100, "Mage", 15, 40, 10, []) as Mage;
-    
+
     // Listar personajes creados
     console.log("Personajes creados:");
     console.log(listCharacters());
-    
-     // Actualizar un personaje
-    updateCharacter(0,'Gandalf', 6, 160); // Subir nivel y salud de Thor
-    updateCharacter(1,'Arthur', 5, 130); // Subir nivel y salud de Artemis
-   
+
+    // Actualizar un personaje
+    updateCharacter(0, 'Arthur', 6, 160); // Subir nivel y salud de Thor
+    updateCharacter(1, 'Gandalf', 5, 130); // Subir nivel y salud de Artemis
+
     // Crear misiones
     const mission1 = assignMission(warrior, "Salvar la aldea", 5, 500, MissionType.Main);
     const mission2 = assignMission(mage, "Recoger hierbas mágicas", 3, 200, MissionType.Side);
-    console.log("Misiones asignadas:");
-    console.log(mission1, mission2);
+    // console.log("Misiones asignadas:");
+    //console.log(mission1, mission2);
 
     // Completar misiones
     try {
@@ -33,7 +34,7 @@ async function main() {
     }
 
     // Ejecutar evento aleatorio para el guerrero
-    triggerEvent(warrior);
+   // triggerEvent(warrior);
 
     // Aceptar varias misiones para el mago
     const missionsList = [mission1, mission2];
@@ -82,10 +83,12 @@ function mainMenu() {
                 const health = parseInt(prompt("Salud inicial: "));
                 const attr1 = parseInt(prompt(type === "Warrior" ? "Ataque inicial: " : "Poder mágico inicial: "));
                 const attr2 = parseInt(prompt(type === "Warrior" ? "Defensa inicial: " : "Mana inicial: "));
-                const experience = parseInt (prompt ("Experiencia: "));
-                const inventory = prompt ("Inventory: ");
+                const experience = parseInt(prompt("Experiencia: "));
+                const inventory = prompt("Inventory: ");
                 createCharacter(name, level, health, type as "Warrior" | "Mage", attr1, attr2, experience, inventory);
+           // calculateExperience(name,experience)
                 break;
+
             }
             case "2": { // Listar personajes
                 console.log("Lista de personajes:");
@@ -132,6 +135,8 @@ function mainMenu() {
                 const reward = parseInt(prompt("Recompensa: "));
                 const missionType = prompt("Tipo de misión (Main/Side/Event): ") as MissionType;
                 assignMission(character, description, difficulty, reward, missionType);
+                calculateExperience(character,reward)
+                
                 break;
             }
             case "6": { // Completar misión
@@ -139,23 +144,25 @@ function mainMenu() {
                 const character = listCharacters().find(c => c.getName() === name);
                 if (!character) {
                     console.log("Personaje no encontrado.");
-                    break;
+
+                } else {
+                    const missionDescription = prompt(`Descripción de la misión a completar: `);
+                    const mission = assignMission(character, missionDescription, 15, 0, MissionType.Main); // Aquí deberías buscar la misión real
+                    completeMission(character, mission).then(console.log).catch(console.error);
+                  
+                   checkMissionSuccess(character,mission)
                 }
-                const missionDescription = prompt(`"Descripción de la misión a completar: "`);
-              const mission2 = assignMission(character, missionDescription, 15,0, MissionType.Main); // Aquí deberías buscar la misión real
-              completeMission(character, mission2).then(console.log).catch(console.error);
-            
-           break;
+                break;
             }
             case "7": { // Activar evento aleatorio
                 const name = prompt("Nombre del personaje para el evento: ");
                 const character = listCharacters().find((c) => c.getName() === name);
-                if (!character) {
-                    console.log("Personaje no encontrado.");
-                    break;
-                }
+             if (!character) {
+                 console.log("Personaje no encontrado.");
+                 
+        }else{
                 triggerEvent(character);
-                break;
+              }  break;
             }
             case "8": { // Lanzar hechizo
                 const name = prompt("Nombre del mago: ");
@@ -166,6 +173,7 @@ function mainMenu() {
                 }
                 const spellCost = parseInt(prompt("Costo del hechizo: "));
                 (character as Mage).castSpell(spellCost);
+               calculateMagicDamage(character)
                 break;
             }
             case "9": { // Atacar enemigo
@@ -178,6 +186,7 @@ function mainMenu() {
                     break;
                 }
                 (attacker as Warrior).attackEnemy(defender);
+                
                 break;
             }
             case "10": // Ver resultados

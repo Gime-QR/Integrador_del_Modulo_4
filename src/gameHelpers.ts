@@ -15,9 +15,9 @@ export function calculateExperience(character: Character, missionReward: number)
 export function calculateMissionSuccessProbability(character: Character, missionDifficulty: number): number {
     const successProbability = (character.getLevel() / missionDifficulty) * 100;
     const finalProbability = Math.min(successProbability, 100);  // La probabilidad de éxito no puede ser mayor al 100%
-
-    console.log(`Probabilidad de éxito de ${character.getName()} en la misión: ${finalProbability.toFixed(2)}%`);
-    return finalProbability;
+  
+console.log(`Probabilidad de éxito de ${character.getName()} en la misión: ${finalProbability}%`)
+return finalProbability;
 }
 
 // Función para determinar si un personaje tiene éxito en una misión
