@@ -1,4 +1,5 @@
-import { Character } from './Characters';  // Importar la clase base Character
+import { Character } from './Characters';
+import { calculateDamageTaken } from '../gameHelpers';  
 
 export class Warrior extends Character {
     private attack: number;  // Atributo de ataque del guerrero
@@ -43,28 +44,30 @@ export class Warrior extends Character {
             console.error("Error al establecer la defensa:", error);
         }
     }
-
+// Método para defenderse de un ataque
+defendFromAttack(damage: number): void {
+    try {
+        const reducedDamage = Math.max(damage - this.defense, 0);  // La defensa reduce el daño
+        this.setHealth(this.getHealth() - reducedDamage);
+        console.log(`${this.getName()} se defendió del ataque, recibiendo ${reducedDamage} de daño.`);
+    } catch (error) {
+        console.error("Error al defenderse del ataque:", error);
+    }
+}
     // Método para atacar a otro personaje
-    attackEnemy(enemy: Character): void {
-        try {
-            const damage = Math.max(this.attack - enemy.getLevel(), 0);  // El daño depende del nivel del enemigo
-            enemy.setHealth(enemy.getHealth() - damage);
-            console.log(`${this.getName()} atacó a ${enemy.getName()} causando ${damage} de daño.`);
-        } catch (error) {
-            console.error("Error al atacar al enemigo:", error);
-        }
+// Método para atacar a otro personaje
+attackEnemy(enemy: Character): void {
+    try {
+        const damage = calculateDamageTaken(enemy, this.attack); // Usa la defensa del enemigo y el nivel para calcular el daño
+        const newHealth = Math.max(enemy.getHealth() - damage, 1); // Asegura que la salud no sea negativa
+        enemy.setHealth(newHealth);
+        console.log(`${this.getName()} atacó a ${enemy.getName()} causando ${damage} de daño. Salud restante de ${enemy.getName()}: ${enemy.getHealth()}`);
+    } catch (error) {
+        console.error("Error al atacar al enemigo:", error);
     }
+}
 
-    // Método para defenderse de un ataque
-    defendFromAttack(damage: number): void {
-        try {
-            const reducedDamage = Math.max(damage - this.defense, 0);  // La defensa reduce el daño
-            this.setHealth(this.getHealth() - reducedDamage);
-            console.log(`${this.getName()} se defendió del ataque, recibiendo ${reducedDamage} de daño.`);
-        } catch (error) {
-            console.error("Error al defenderse del ataque:", error);
-        }
-    }
+    
 
     // Método para mostrar información del Warrior
     getWarriorInfo(): string {
