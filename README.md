@@ -62,14 +62,3 @@ Sigue las siguientes covenciones:
 
 
 
-
-
-
-
-
-## Funciones y posibles respuestas del videojuegos
-
-**MANEJO API VIDEJUEGOS** 
-- Inicializa con un npx ts-node index.ts.
-Se de
-
