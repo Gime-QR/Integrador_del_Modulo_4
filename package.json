@@ -8,10 +8,10 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "npx ts-node src/index.ts"
   },
   "keywords": [],
-  "author": "Pacheco Evelia, Querejeta Rial Gimena, V. Camila",
+  "author": "Pacheco Evelia, Querejeta Rial Gimena, Vásquez. Camila",
   "license": "ISC",
   "description": "",
   "dependencies": {

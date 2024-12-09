@@ -1,9 +1,16 @@
-
 # ADA API PARA UN VIDEOJUEGOS
 
 # Descripción
 
-La **ADA API PARA VIDEOJUEGOS** permite sumergite en un mundo donde puden crear personajes, adquirir habilidades, y obtener recompensa o beneficios a través de las misiones llevadas a cabo en diferentes niveles. Los personajes cuentan con atributos adicionales de ataque y defensa, como también poder mágico y maná. En cuanto a las misiones, detallan la dificultad y el premio adquirido una vez complentada la misión.
+**ADA API PARA VIDEOJUEGOS** permite sumergite en un mundo donde puden crear personajes, adquirir habilidades, y obtener recompensa o beneficios a través de las misiones llevadas a cabo en diferentes niveles. Los personajes cuentan con atributos adicionales de ataque y defensa, como también poder mágico y maná. En cuanto a las misiones, detallan la dificultad y el premio adquirido una vez complentada la misión.
+ 
+
+**Objetivos del Proyecto**
+- Permite la creación de personajes, con sus atributos.
+- Crea las Misiones con sus recompensas por pasar cada nivel.
+- Realiza estadisticas y probabilidades en cada asignación de misiones.
+- Comparte el daño o la experiencia adquirida por el personaje. 
+
 
 
 ## Requisitos previos
@@ -23,35 +30,31 @@ Ejecuta el siguiente comando para instalar todas las dependencias listadas en el
 - **npm init
 - **npm install typescript ts-node 
 - **npx tsc --init 
+- **npm install prompt-sync
 
-## Funciones y posibles respuestas del videojuegos
+## Ejecutación del Juego 
+Ejecuta el comando : **npx ts-node src/index.ts para que desplegue el Menú Principal
 
-### Personajes (Characters)
-- Creacion del personaje
-- Obtencion de las misiones asignadas para cada persoanje
-- Actualización de cada personaje, si sube o baja de niveles ademas del nidel de salud
-- Eliminación de personaje
-
-
-### Misiones 
-- Creación de misiones
-- Asignación de misiones a cada personaje
-- Visualización de misiones después de completarlas
-- Visualización de misiones luego de la actualización de personajes
+**Menú Principal**
+En el menú principal incluye las tareas más importantes del juego. En las opciones desplegadas se encuentran desde la creación de personajes y asignación de misiones; también la interación entre personajes,en donde pueden lanzar de hechizos o atacar al enemigo además de los eventos aleatorios que designa si fue positivo o negativo. 
 
 
-
-### Estructura del Proyecto
+### Diseño del Proyecto
 Sigue las siguientes covenciones:
 
 **src/**: Carpeta de origen del proyecto.
 
+**controllers/**:Carpeta donde se gestiona la lógica de las principales clases. 
+- **gameController.ts/** : Archivo que gestiona la creación y eliminación de personaje, lista los persoanjes existentes y actualiza los personajes. Además gestiona la asignación de misión y completar la misión y el evento aleatorio.
+- **gameLogic.ts/**: Gestiona las lógicas de las asiganción de las misiones: múltiples misiones, misiones usando promesas y misiones usando callbacks.
 
-**models/**: 
-
+**models/**: Carpeta que gestiona la estructuras de las clases y las subclases.
 - **Characters.ts/**: Archivo donde se crea la estructura de los personajes y métodos.
 - **Mage.ts/**: Gestiona las operaciones relacionadas con la Magia (como se extiende a los personajes, el poder y la cantidad de mana).
 - **Misiion.ts/**: Gestiona las operaciones en cuánto a las misiones (descripción, dificultad, entrega de recompensa).
 - **Warrior.ts/**: Gestiona las operaciones relacionadas en cuánto a la defensa, ataques, resistencia durante en videojuego.
 
-**index.ts/**: Archivo que gestiona las creaciones de personajes y misiones, asignacion de misiones, actualización de personajes. Además de las actualizaciones luego de cada misión.
+**config/**
+- **gameHelpers.ts/**: Archivo que contiene funciones adicionales como las probabilidades de éxito en una misión, calcular la experiencia ganada luego de una misión; calcular la vida o daño luego de cada misión que gane o pierda un personaje. Además de calcular la probabilidad de recompensa de una evento aleatorio. 
+
+**index.ts/**: Archivo principal que gestiona el menú principal del juego. Ejecuta las creaciones de personajes y misiones, asignacion de misiones, actualización de personajes. Además de las interacciones en cada misión, usa las probabilidades de éxito o de fallar y lo que gana o pierde. 

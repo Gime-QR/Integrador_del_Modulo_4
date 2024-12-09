@@ -13,7 +13,7 @@ export class Character {
         this.inventory = inventory;
     }
 
-    // Métodos para obtener los valores de los atributos
+// Métodos para obtener los valores de los atributos
     getName(): string {
         return this.name;
     }
@@ -34,7 +34,7 @@ export class Character {
         return this.inventory;
     }
 
-    // Métodos para modificar los valores de los atributos
+// Métodos para modificar los valores de los atributos
     setName(name: string): void {
         try {
             if (name.length > 0) {
@@ -73,7 +73,7 @@ export class Character {
 
     setExperience(experience: number): void {
         try {
-            if (experience >= 0) { // La experiencia puede ser 0 o mayor
+            if (experience >= 0) { 
                 this.experience = experience;
             } else {
                 throw new Error("La experiencia debe ser mayor o igual a cero.");
@@ -121,7 +121,7 @@ export class Character {
         }
     }
 
-    // Método para mostrar la información del personaje
+// Método para mostrar la información del personaje
     getCharacterInfo(): string {
         return `Nombre: ${this.name}, Nivel: ${this.level}, Salud: ${this.health}, Experiencia: ${this.experience}, Inventario: ${this.inventory}`;
     }

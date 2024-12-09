@@ -17,7 +17,7 @@ export class Mission {
         this.missionType = missionType;
     }
 
-    // Métodos de acceso (getters)
+// Métodos de acceso (getters)
     getDescription(): string {
         return this.description;
     }
@@ -34,7 +34,7 @@ export class Mission {
         return this.missionType;
     }
 
-    // Métodos de modificación (setters)
+// Métodos de modificación (setters)
     setDescription(description: string): void {
         try {
             if (description && description.length > 0) {
@@ -83,7 +83,7 @@ export class Mission {
         }
     }
 
-    // Método para mostrar la información de la misión
+// Método para mostrar la información de la misión
     getMissionInfo(): string {
         return `Descripción: ${this.description}, Dificultad: ${this.difficulty}, Recompensa: ${this.reward}, Tipo de Misión: ${this.missionType}`;
     }
