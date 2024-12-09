@@ -1,12 +1,10 @@
-import { listCharacters, getMissions, updateCharacter, createCharacter, deleteCharacter, assignMission, completeMission, triggerEvent, missions, characters} from './controllers/gameControllers';
+import { listCharacters, getMissions, updateCharacter, createCharacter, deleteCharacter, assignMission, completeMission, triggerEvent} from './controllers/gameControllers';
 import { MissionType} from './models/Mission';
 import { Warrior } from './models/Warrior';
 import { Mage } from './models/Mage';
-import { Character } from './models/Characters';
-import { acceptMissionsWithCallback, acceptMissionsWithPromises, acceptMultipleMissions} from './controllers/gameLogic';
-import { checkMissionSuccess, calculateDamageTaken, calculateExperience, calculateMagicDamage, calculateMissionSuccessProbability, calculateEventReward } from './gameHelpers';
+import { checkMissionSuccess, calculateExperience, calculateMagicDamage, calculateEventReward } from './config/gameHelpers';
 
-
+// Funcion que muestra información inicial al comenzar el juego.
 function storytellingIntro() {
     console.log("\n\n ✨ Bienvenido a la Aventura Épica ✨");
     console.log("\nLos héroes se preparan para su travesía:");
@@ -20,7 +18,7 @@ function storytellingIntro() {
 
     // Mostrar misiones asignadas
     console.log("\n⚔️  Misiones asignadas:");
-    const allMissions = getMissions(); // Obtener la lista de misiones exportada
+    const allMissions = getMissions(); 
     allMissions.forEach((mission) => {
         console.log(`- "${mission.getDescription()}" Tipo: ${mission.getMissionType()}, 
         Dificultad: ${mission.getDifficulty()}, Recompensa: ${mission.getReward()}`);
@@ -29,14 +27,13 @@ function storytellingIntro() {
     console.log("\n🌟 ¡La aventura comienza ahora! 🌟");
 }
 
+//Función para iniciar a los personajes y las misiones principales del juego.
 async function main() {
     
 // Crear personajes
-
 const warrior: Warrior = createCharacter("Arthur", 10, 50, "Warrior", 150, 40, 0, ["Espada"]) as Warrior;
 const mage: Mage = createCharacter("Gandalf", 12, 100, "Mage", 15, 40, 0, ["Varita"]) as Mage;
 
-    
 // Crear misiones
 const mission1 = assignMission(warrior, "Salvar la aldea", 5, 500, MissionType.Main);
 const mission2 = assignMission(mage, "Recoger hierbas mágicas", 3, 200, MissionType.Side);
@@ -51,8 +48,6 @@ const mission2 = assignMission(mage, "Recoger hierbas mágicas", 3, 200, Mission
 
     // Aceptar varias misiones para el mago
     const missionsList = [mission1, mission2];
-
-
 }
 
 // Ejecutar el juego
@@ -63,7 +58,7 @@ main().catch((error) => {
 //Menu://
 const prompt = require("prompt-sync")();
 
-// Mostrar el menú principal
+// Función para mostrar el menú principal
 function showMenu() {
     console.log("\n--- Menú Principal ---");
     console.log("1. Crea nuevos personajes");
@@ -97,40 +92,37 @@ async function Menu() {
                 createCharacter(name, level, health, type as "Warrior" | "Mage", attr1, attr2, experience, inventory);
                 break;
             }
+            
             case "2": { // Listar personajes
                 console.log("Lista de personajes:");
                 listCharacters().forEach((c) => console.log(c.getCharacterInfo()));
                 break;
             }
+            
             case "3": { // Eliminar personaje
                 const name = prompt("Nombre del personaje a eliminar: ");
                 deleteCharacter(name);
                 break;
             }
-            case "4": { // Actualizar personaje
+            
+            case "4": { // Actualizar personajes
                 const name = prompt("Nombre del personaje a actualizar: ");
                 const character = listCharacters().find(c => c.getName() === name);
-            
                 if (!character) {
                     console.log("Personaje no encontrado.");
                     break;
                 }
-            
                 const newName = prompt("Nuevo nombre (deja vacío para no cambiar): ");
                 const newLevel = prompt("Nuevo nivel (deja vacío para no cambiar): ");
                 const newHealth = prompt("Nueva salud (deja vacío para no cambiar): ");
-            
                 updateCharacter(
                     name,
                     newName || undefined,
                     newLevel ? parseInt(newLevel) : undefined,
                     newHealth ? parseInt(newHealth) : undefined
                 );
-            
                 console.log("Personaje actualizado:");
                 console.log(character.getCharacterInfo());
-                
-                
                 // Agregar elementos al inventario
                 const addInventory = prompt("¿Deseas agregar elementos al inventario? (sí/no): ").toLowerCase();
                 if (addInventory === "sí" || addInventory === "si") {
@@ -142,7 +134,6 @@ async function Menu() {
                         console.log("No se ingresó ningún elemento.");
                     }
                 }
-            
                 break;
             }
             
@@ -161,6 +152,7 @@ async function Menu() {
                 checkMissionSuccess(character, mission)
                 break;
             }
+            
             case "6": { // Activar evento aleatorio
                 const name = prompt("Nombre del personaje para el evento: ");
                 const character = listCharacters().find((c) => c.getName() === name);
@@ -170,14 +162,13 @@ async function Menu() {
                     console.log(`Personaje "${name}" no encontrado. Lista actual:`);
                     console.log(listCharacters().map(c => c.getName()).join(", ")); // Mostrar personajes disponibles
                     break;
-                }
-                
-                calculateEventReward (character)
+                } 
+                calculateEventReward (character) //Calcular las recompensas del evento
                 console.log(`Iniciando evento para ${character.getName()}...`);
-                await triggerEvent(character); // Llamar al evento solo una vez
-                
+                await triggerEvent(character); 
                 break;
             }
+            
             case "7": { // Lanzar hechizo
                 const name = prompt("Nombre del mago: ");
                 const character = listCharacters().find((c) => c.getName() === name);
@@ -195,13 +186,11 @@ async function Menu() {
                 const attackerName = prompt("Nombre del atacante (Warrior): ");
                 const defenderName = prompt("Nombre del defensor: ");
                 const attacker = listCharacters().find((c) => c.getName() === attackerName);
-                const defender = listCharacters().find((c) => c.getName() === defenderName);
-                
+                const defender = listCharacters().find((c) => c.getName() === defenderName);    
                 if (!attacker || !(attacker instanceof Warrior) || !defender) {
                     console.log("Atacante o defensor no válido.");
                     break;
                 }
-            
                 (attacker as Warrior).attackEnemy(defender); // Usa la lógica integrada en attackEnemy
                 break;
             }

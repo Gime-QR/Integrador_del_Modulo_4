@@ -1,5 +1,5 @@
-import { Character } from '../src/models/Characters';
-import { Mission } from '../src/models/Mission';
+import { Character } from '../models/Characters';
+import { Mission } from '../models/Mission';
 
 // Función para calcular la experiencia ganada al completar una misión
 export function calculateExperience(character: Character, missionReward: number): number {

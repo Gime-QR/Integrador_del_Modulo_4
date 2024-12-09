@@ -1,4 +1,4 @@
-import { Character } from './Characters';  // Importar la clase base Character
+import { Character } from './Characters'; 
 
 export class Mage extends Character {
     private magicPower: number;  // Poder mágico del mago
@@ -10,7 +10,7 @@ export class Mage extends Character {
         this.mana = mana;
     }
 
-    // Métodos de acceso (getters) para los atributos adicionales
+// Métodos de acceso (getters) para los atributos adicionales
     getMagicPower(): number {
         return this.magicPower;
     }
@@ -19,7 +19,7 @@ export class Mage extends Character {
         return this.mana;
     }
 
-    // Métodos de modificación (setters) para los atributos adicionales
+// Métodos de modificación (setters) para los atributos adicionales
     setMagicPower(magicPower: number): void {
         try {
             if (magicPower > 0) {
@@ -34,7 +34,7 @@ export class Mage extends Character {
 
     setMana(mana: number): void {
         try {
-            if (mana >= 0) {  // El mana no puede ser negativo
+            if (mana >= 0) {  
                 this.mana = mana;
             } else {
                 throw new Error("El mana no puede ser negativo.");
@@ -44,7 +44,7 @@ export class Mage extends Character {
         }
     }
 
-    // Método para lanzar un hechizo
+// Método para lanzar un hechizo
     castSpell(spellCost: number): void {
         try {
             if (this.mana >= spellCost) {
@@ -59,7 +59,7 @@ export class Mage extends Character {
 }
 
 
-    // Método para regenerar mana
+// Método para regenerar mana
     regenerateMana(amount: number): void {
         try {
             if (amount > 0) {
@@ -73,7 +73,7 @@ export class Mage extends Character {
         }
     }
 
-    // Método para mostrar información del Mage
+// Método para mostrar información del Mage
     getMageInfo(): string {
         return `${this.getCharacterInfo()}, Poder Mágico: ${this.magicPower}, Mana: ${this.mana}`;
     }

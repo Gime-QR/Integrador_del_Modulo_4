@@ -1,13 +1,8 @@
 import { Character } from '../models/Characters';
-import { Warrior } from '../models/Warrior';
-import { Mage } from '../models/Mage';
-import { assignMission,completeMission } from './gameControllers';
+import {completeMission } from './gameControllers';
 import { Mission } from '../models/Mission';
 
-
-
-//const characters: Character[] = [];
-
+const characters: Character[] = [];
 
 // Función para aceptar múltiples misiones
 export async function acceptMultipleMissions(character: Character, missionsList: Mission[]): Promise<void> {
@@ -22,21 +17,6 @@ export async function acceptMultipleMissions(character: Character, missionsList:
     }
 }
 
-// Función para encadenar misiones usando promesas
-export function acceptMissionsWithPromises(character: Character, missionsList: Mission[]): void {
-    let promiseChain = Promise.resolve();
-
-    missionsList.forEach(mission => {
-        promiseChain = promiseChain.then(() => {
-            return completeMission(character, mission).then(result => {
-                console.log(result);
-            }).catch(error => {
-                console.error(error);
-            });
-        });
-    });
-}
-
 // Función para aceptar misiones con un callback
 export function acceptMissionsWithCallback(character: Character, missionsList: Mission[], callback: (result: string) => void): void {
     let currentMissionIndex = 0;
@@ -47,9 +27,9 @@ export function acceptMissionsWithCallback(character: Character, missionsList: M
             completeMission(character, mission).then(result => {
                 callback(result);
                 currentMissionIndex++;
-                completeNextMission();  // Llamamos recursivamente para la siguiente misión
+                completeNextMission();  
             }).catch(error => {
-                callback(error);  // Si falla, llamamos al callback con el error
+                callback(error); 
             });
         }
     }

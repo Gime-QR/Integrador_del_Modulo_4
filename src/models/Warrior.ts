@@ -1,5 +1,5 @@
 import { Character } from './Characters';
-import { calculateDamageTaken } from '../gameHelpers';  
+import { calculateDamageTaken } from '../config/gameHelpers';  
 
 export class Warrior extends Character {
     private attack: number;  // Atributo de ataque del guerrero
@@ -11,7 +11,7 @@ export class Warrior extends Character {
         this.defense = defense;
         }
 
-    // Métodos de acceso (getters) para los atributos adicionales
+// Métodos de acceso (getters) para los atributos adicionales
     getAttack(): number {
         return this.attack;
     }
@@ -20,7 +20,7 @@ export class Warrior extends Character {
         return this.defense;
     }
 
-    // Métodos de modificación (setters) para los atributos adicionales
+// Métodos de modificación (setters) para los atributos adicionales
     setAttack(attack: number): void {
         try {
             if (attack > 0) {
@@ -47,14 +47,14 @@ export class Warrior extends Character {
 // Método para defenderse de un ataque
 defendFromAttack(damage: number): void {
     try {
-        const reducedDamage = Math.max(damage - this.defense, 0);  // La defensa reduce el daño
+        const reducedDamage = Math.max(damage - this.defense, 1);  // La defensa reduce el daño
         this.setHealth(this.getHealth() - reducedDamage);
         console.log(`${this.getName()} se defendió del ataque, recibiendo ${reducedDamage} de daño.`);
     } catch (error) {
         console.error("Error al defenderse del ataque:", error);
     }
 }
-    // Método para atacar a otro personaje
+
 // Método para atacar a otro personaje
 attackEnemy(enemy: Character): void {
     try {
@@ -67,9 +67,8 @@ attackEnemy(enemy: Character): void {
     }
 }
 
-    
 
-    // Método para mostrar información del Warrior
+// Método para mostrar información del Warrior
     getWarriorInfo(): string {
         return `${this.getCharacterInfo()}, Ataque: ${this.attack}, Defensa: ${this.defense}`;
     }
